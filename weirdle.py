@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[3]:
 
 
 #wierdle is wordle but OOP during classtime today
@@ -32,7 +31,6 @@ wordlist = [w.strip() for w in wordlist]
 
 
 
-# In[6]:
 
 
 class Game:
@@ -98,7 +96,6 @@ class Game:
         print()
 
 
-# In[19]:
 
 
 #random real word not hardcode
@@ -108,13 +105,11 @@ game = Game(currword)
 game.word
 
 
-# In[ ]:
 
 
 
 
 
-# In[20]:
 
 
 while not game.is_game_over():
@@ -129,37 +124,31 @@ else:
 
 
 
-# In[ ]:
 
 
 
 
 
-# In[ ]:
 
 
 
 
 
-# In[ ]:
 
 
 
 
 
-# In[ ]:
 
 
 
 
 
-# In[ ]:
 
 
 
 
 
-# In[ ]:
 
 
 
