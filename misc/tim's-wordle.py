@@ -1,46 +1,18 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-
-
-#wierdle is wordle but OOP during classtime today
- 
-#todo
-    #what what too short guess
-    #truncate too-long guess
-    #no repeat full-guesses allowed
-    #verify that guess is a word at all
-    
-    #actual terminal colors
-
-    #script it
-    
-    
-    
-    
-# !ls 
-#what it's a bash command whee
-
-    
-
 import random
+from colorama import Fore, Style
 
-wordlist = open("wordlist.txt", "r")
-wordlist = wordlist.readlines()
-wordlist = [w.strip() for w in wordlist]
+words = open('wordlist.txt').readlines()
+words = [w.strip() for w in words]
 
+def green(s):
+    return Fore.GREEN + s + Style.RESET_ALL
 
-
-
+def yellow(s):
+    return Fore.YELLOW + s + Style.RESET_ALL
 
 class Game:
     def __init__(self, word=None):
-        if word:
-            self.word = word.upper()
-        else:
-            # TODO: Pick random word from list
-            pass
-        
+        self.word = word.upper()
         self.guesses = []
         
     def is_game_over(self):
@@ -59,7 +31,6 @@ class Game:
         guess = input("Enter a word: ").upper().strip()
         # TODO: More input sanitization
         
-        # TODO: Create color_codes
         color_codes = []
         true_word_copy = list(self.word)
         
@@ -78,7 +49,7 @@ class Game:
             if guess_char not in true_word_copy and color_codes[i] != 'G':
                 color_codes[i] = 'X'
                 
-            # Naive: In word, wrong place - have to check G here bc otherwise why even double-loop
+            # Naive: In word, wrong place
             elif guess_char in true_word_copy and color_codes[i] != 'G':
                 color_codes[i] = 'Y'
                 
@@ -91,79 +62,24 @@ class Game:
         self.guesses.append((guess, color_codes))
         
     def print_board(self):
-        for g, c in self.guesses:
-            print(f"{g}\t{c}")
+        for guess, colors in self.guesses:
+            for guess_char, color_char in zip(guess, colors):
+                if color_char == 'X':
+                    print(guess_char, end=' ')
+                elif color_char == 'Y':
+                    print(yellow(guess_char), end=' ')
+                elif color_char == 'G':
+                    print(green(guess_char), end=' ')
+            print()
 
-#tims was a bit different here, since not printing a whole codeblock
-#just coloring the guess itself: one column should be output:
-        # for guess, colors in self.guesses:
-        #     for guess_char, color_char in zip(guess, colors):
-        #         if color_char == 'X':
-        #             print(guess_char, end=' ')
-        #         elif color_char == 'Y':
-        #             print(yellow(guess_char), end=' ')
-        #         elif color_char == 'G':
-        #             print(green(guess_char), end=' ')
-
-
-
-
-        print()
-
-
-
-
-#random real word not hardcode
-currword = random.choice(wordlist)
-game = Game(currword)
-game.word
-
-
-
-
-
-
-
-
+random_word = random.choice(words)
+game = Game(random_word)
 
 while not game.is_game_over():
     game.make_guess()
     game.print_board()
     
 if game.win:
-    print(f"You won! it was {game.word}!")
-    #reset the word here
+    print(f"You won! The word was {game.word}!")
 else:
-    print(f"You lost! it was {game.word}!")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    print(f"You lost! The word was {game.word}!")

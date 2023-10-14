@@ -1,0 +1,21 @@
+xterm-256color
+this means that the terminal CAN display color
+not what settings it currently has
+what I'd like is to check whether, eg, the terminal has only all green outputting in which case the colors will be useless from the wordle defaults
+
+
+
+https://pypi.org/project/colorama/
+
+print('\033[31m' + 'some red text')
+print('\033[39m') # and reset to default color
+
+like great that we can change to default, but how can I act depending on value of it? I guess I'll have tomanually create a bg and fg colorset
+
+
+
+
+
+colorama refers us also to:
+https://pypi.org/project/blessings/
+
