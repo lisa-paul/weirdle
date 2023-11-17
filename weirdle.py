@@ -60,13 +60,18 @@ class Game:
         # TODO: More input sanitization
         
         # TODO: Create color_codes
+        correct_letter = "G"
+        partial_letter = "Y"
+        incorrect_letter = "X"
+
         color_codes = []
+        
         true_word_copy = list(self.word)
         
         # First pass: Mark greens
         for i, guess_char in enumerate(guess):
             if guess_char == true_word_copy[i]:
-                color_codes.append('G')
+                color_codes.append(correct_letter)
                 true_word_copy[i] = '_'
             else:
                 color_codes.append('_')
@@ -75,12 +80,12 @@ class Game:
         for i, guess_char in enumerate(guess):
                 
             # Grey if char not in word at all
-            if guess_char not in true_word_copy and color_codes[i] != 'G':
-                color_codes[i] = 'X'
+            if guess_char not in true_word_copy and color_codes[i] != correct_letter:
+                color_codes[i] = incorrect_letter
                 
             # Naive: In word, wrong place - have to check G here bc otherwise why even double-loop
-            elif guess_char in true_word_copy and color_codes[i] != 'G':
-                color_codes[i] = 'Y'
+            elif guess_char in true_word_copy and color_codes[i] != correct_letter:
+                color_codes[i] = partial_letter
                 
                 # Take first appearance of char in true word, set to _
                 yellow_ix = true_word_copy.index(guess_char)
@@ -93,6 +98,8 @@ class Game:
     def print_board(self):
         for g, c in self.guesses:
             print(f"{g}\t{c}")
+
+
 
 #tims was a bit different here, since not printing a whole codeblock
 #just coloring the guess itself: one column should be output:

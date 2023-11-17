@@ -19,3 +19,9 @@ like great that we can change to default, but how can I act depending on value o
 colorama refers us also to:
 https://pypi.org/project/blessings/
 
+
+
+
+so what if intsead of G and Y, I used <CORRECT LETTER> and <almost correct>
+i.e. caps/lower
+
