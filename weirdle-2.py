@@ -31,6 +31,7 @@ import random
 
 alphabet = string.ascii_uppercase
 
+
 #Create the list of valid words 
 
 wordlist = open("wordlist.txt", "r")
@@ -113,9 +114,10 @@ class Game:
 
         #hay what if modelled on later for loop & do a "for g,c" but ignore the c
 
-        #Convert/add current guess to alphabetised list of all unique letters in all guessed-words
-#        self.letters = ''.join(sorted(set(''.join([letter for each in self.guesses[0][0] for letter in each[0]]))))
+        #Convert/add current-guess's letters to alphabetised list of all unique letters in all guesses
         self.letters = ''.join(sorted(set(''.join([letter for guess, _ in self.guesses for each in guess for letter in each]))))
+
+
 
 #        #TODO: only walk thru & add the latest words' guess???
 #        #make less redundant?
@@ -127,14 +129,16 @@ class Game:
 
         #Show all guessed letters, then unguessed
 
-        # for l in self.letters:
-        #     print(f"{l}\t")
-        #unguessed????
-
 ###        #TODO xor the guess-letters with the currently remaining alphabet
         ######
-        #currently = all, next ==> if not in letters
-        print(self.letters,"\t",alphabet)
+
+        print("first strings: ", self.letters,"\t",alphabet, "\nThen diff-sets", 
+            set(alphabet) - set(self.letters),"\nThen diffsets as str",
+            ''.join(set(alphabet) - set(self.letters)),"\nthendiffstr but sorted",
+            ''.join(sorted(set(alphabet) - set(self.letters)))
+            )
+
+
 
         #Show all guesses & their colors
         for g, c in self.guesses:
