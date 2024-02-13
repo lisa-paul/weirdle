@@ -25,3 +25,22 @@ https://pypi.org/project/blessings/
 so what if intsead of G and Y, I used <CORRECT LETTER> and <almost correct>
 i.e. caps/lower
 
+
+
+
+
+Enter a word: roate
+ROATE	YXXXX
+
+Enter a word: unsuck
+Traceback (most recent call last):
+  File "/Users/lisapaul/GA-DSI/extrapractice/weirdle/weirdle.py", line 137, in <module>
+    game.make_guess()
+  File "/Users/lisapaul/GA-DSI/extrapractice/weirdle/weirdle.py", line 73, in make_guess
+    if guess_char == true_word_copy[i]:
+                     ~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+
+
+
