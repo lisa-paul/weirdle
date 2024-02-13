@@ -2,30 +2,40 @@
 # coding: utf-8
 
 
-
 #wierdle is wordle but OOP during classtime today
  
 #todo
+    # discplay all prov letters guessed &/or the entire alphabet
+    #before the "all guesses", do:
+        #PREV GUESS: print allguesses.aplahabeetzied
+
     #TRY AGIN if current guess has already been used
+    #TRY AGAIN if guess not in the word list
+
     #TRY AGIN if too short guess
     #TRY AGAIN if too-long guess
-    #TRY AGAIN if guess not in the word list
-    
-    #actual terminal colors
 
-    #script it to run w/o typing $> python3
     
-    
-    
-    
+    #actual terminal colors?
 
+    #script it to run w less typing eg no  "python3"
+
+    
+    
+    
+import string
 import random
+
+
+#should I define my class Game before or after these initial steps?
+
+alphabet = string.ascii_uppercase
+
+#Create the list of valid words 
 
 wordlist = open("wordlist.txt", "r")
 wordlist = wordlist.readlines()
 wordlist = [w.strip() for w in wordlist]
-
-
 
 
 
@@ -38,7 +48,9 @@ class Game:
             pass
         
         self.guesses = []
+        self.letters = []
         
+
     def is_game_over(self):
         # If number of guesses >= 6 -> over
         if len(self.guesses) >= 6 and self.guesses[-1][0] != self.word:
@@ -56,18 +68,10 @@ class Game:
         # Validate that guess is not empty
         guess = []
         while not guess:
-#            print("Please enter a word.")
             guess = input("Enter a word: ").upper().strip()
 
-        # Continue with the rest of the error-checking and processing
-        # TRY AGAIN if too short guess
-        # TRY AGAIN if too-long guess
-        # TRY AGAIN if current guess has already been used
-        # TRY AGAIN if guess not in the word list
-
-
         
-        # TODO: Create actual color_codes for display?
+        # TODO: maybe Create actual color_codes for display?
         correct_letter = "G"
         partial_letter = "Y"
         incorrect_letter = "X"
@@ -99,11 +103,40 @@ class Game:
                 yellow_ix = true_word_copy.index(guess_char)
                 true_word_copy[yellow_ix] = '_'
     
-        # Add guess to self.guesses
+
+        #TODO: explain or change why are the colors not self
         color_codes = ''.join(color_codes)
+
+        # Add current guess to list of all guesses
         self.guesses.append((guess, color_codes))
+
+
+        #hay what if modelled on later for loop & do a "for g,c" but ignore the c
+
+        #Convert/add current guess to alphabetised list of all unique letters in all guessed-words
+#        self.letters = ''.join(sorted(set(''.join([letter for each in self.guesses[0][0] for letter in each[0]]))))
+        self.letters = ''.join(sorted(set(''.join([letter for guess, _ in self.guesses for each in guess for letter in each]))))
+
+#        #TODO: only walk thru & add the latest words' guess???
+#        #make less redundant?
+ 
         
+
+
     def print_board(self):
+
+        #Show all guessed letters, then unguessed
+
+        # for l in self.letters:
+        #     print(f"{l}\t")
+        #unguessed????
+
+###        #TODO xor the guess-letters with the currently remaining alphabet
+        ######
+        #currently = all, next ==> if not in letters
+        print(self.letters,"\t",alphabet)
+
+        #Show all guesses & their colors
         for g, c in self.guesses:
             print(f"{g}\t{c}")
 
@@ -122,22 +155,17 @@ class Game:
 
 
 
-
+        #add whitespace to distinguish the new input line
         print()
 
 
 
+#todo - learn why not to actually do the random within the init??
 
-#random real word not hardcode
+#Choose a word from the wordlist, then start the game
 currword = random.choice(wordlist)
 game = Game(currword)
 game.word
-
-
-
-
-
-
 
 
 

@@ -1,0 +1,36 @@
+class Game:
+    def __init__(self, word=None):
+        if word:
+            self.word = word.upper()
+        else:
+            self.word = random.choice(wordlist).upper()
+        
+        self.guesses = []
+
+    def validate_guess(self, guess):
+        # Check if guess has already been used
+        if guess in [g[0] for g in self.guesses]:
+            print("You've already guessed that word.")
+            return False
+        
+        # Check if guess is too short or too long
+        if len(guess) != len(self.word):
+            print("Your guess should be the same length as the word.")
+            return False
+        
+        # Check if guess is in the word list
+        if guess not in wordlist:
+            print("That's not a valid word.")
+            return False
+        
+        return True
+    
+    def make_guess(self):
+        guess = input("Enter a word: ").strip().upper()
+        
+        while not self.validate_guess(guess):
+            guess = input("Enter a different word: ").strip().upper()
+        
+        # Process the guess and update the game state
+
+    # Other methods remain the same
