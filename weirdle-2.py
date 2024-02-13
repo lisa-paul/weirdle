@@ -120,7 +120,7 @@ class Game:
 
 
 #        #TODO: only walk thru & add the latest words' guess???
-#        #make less redundant?
+#        #increase efficiency
  
         
 
@@ -128,13 +128,7 @@ class Game:
     def print_board(self):
 
         #Show all guessed letters, then unguessed
-
-###        #TODO xor the guess-letters with the currently remaining alphabet
-        ######
-
-        print("first strings: ", self.letters,"\t",alphabet, "\nThen diff-sets", 
-            set(alphabet) - set(self.letters),"\nThen diffsets as str",
-            ''.join(set(alphabet) - set(self.letters)),"\nthendiffstr but sorted",
+        print(self.letters,"\t",
             ''.join(sorted(set(alphabet) - set(self.letters)))
             )
 
