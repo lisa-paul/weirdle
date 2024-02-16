@@ -2,12 +2,9 @@
 # coding: utf-8
 
 
-#wierdle is wordle but OOP during classtime today
+#wierdle is wordle but OOP during classtime <insert date>
  
 #todo
-    # discplay all prov letters guessed &/or the entire alphabet
-    #before the "all guesses", do:
-        #PREV GUESS: print allguesses.aplahabeetzied
 
     #TRY AGIN if current guess has already been used
     #TRY AGAIN if guess not in the word list
@@ -17,9 +14,8 @@
 
     
     #actual terminal colors?
-
     #script it to run w less typing eg no  "python3"
-
+    #make annotated Jupyter notebook to show smarts
     
     
     
@@ -69,6 +65,7 @@ class Game:
         # Validate that guess is not empty
         guess = []
         while not guess:
+            print('-' * 40)
             guess = input("Enter a word: ").upper().strip()
 
         
@@ -128,15 +125,13 @@ class Game:
     def print_board(self):
 
         #Show all guessed letters, then unguessed
-        print(self.letters,"\t",
-            ''.join(sorted(set(alphabet) - set(self.letters)))
+        print("Guessed:\t",self.letters,\
+            "\nUnguessed:\t", ''.join(sorted(set(alphabet) - set(self.letters))) \
             )
-
-
 
         #Show all guesses & their colors
         for g, c in self.guesses:
-            print(f"{g}\t{c}")
+            print(g,"\t",c)
 
 
 
