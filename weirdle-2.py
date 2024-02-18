@@ -2,17 +2,12 @@
 # coding: utf-8
 
 
-#wierdle is wordle but OOP during classtime <insert date>
- 
+#wierdle is wordle but partly OOP during classtime <insert date>
+#Later, I added 
+    #guessed/unguessed letter display
+    #input validation checks
+
 #todo
-
-    #TRY AGIN if current guess has already been used
-    #TRY AGAIN if guess not in the word list
-
-    #TRY AGIN if too short guess
-    #TRY AGAIN if too-long guess
-
-    
     #actual terminal colors?
     #script it to run w less typing eg no  "python3"
     #make annotated Jupyter notebook to show smarts
@@ -29,7 +24,6 @@ alphabet = string.ascii_uppercase
 
 
 #Create the list of valid words 
-
 wordlist = open("wordlist.txt", "r")
 wordlist = wordlist.readlines()
 wordlist = [w.strip() for w in wordlist]
@@ -62,13 +56,42 @@ class Game:
     
     def make_guess(self):
 
-        # Validate that guess is not empty
         guess = []
-        while not guess:
-            print('-' * 40)
-            guess = input("Enter a word: ").upper().strip()
 
-        
+        #todo clarify the validation loop w/ e.g. "while isgood=False"
+        #if guess is invalid, keep trying again
+        while True:
+
+            print('-' * 40)
+            guess = input("Guess a 5-letter word: ").upper().strip()
+
+            # New guess must not be empty
+            if not guess:
+                continue
+
+            # New guess must not be wrong length
+            elif len(guess) != 5:
+                print("Word must be 5 letters long.")
+                continue
+
+            # Check whether guess is one of the allowed words
+            elif guess not in wordlist:
+                print("Word was not in the word list.")
+                continue 
+
+            # Check if guess is already guessed before
+            elif guess in [item[0] for item in self.guesses]:
+                print("Word was already guessed.")
+                continue 
+
+            #guess is valid, so proceed
+            else: 
+                break
+
+
+
+        #Check if any letters are in the right place
+
         # TODO: maybe Create actual color_codes for display?
         correct_letter = "G"
         partial_letter = "Y"
@@ -100,71 +123,58 @@ class Game:
                 # Take first appearance of char in true word, set to _
                 yellow_ix = true_word_copy.index(guess_char)
                 true_word_copy[yellow_ix] = '_'
-    
 
+            
         #TODO: explain or change why are the colors not self
         color_codes = ''.join(color_codes)
 
         # Add current guess to list of all guesses
         self.guesses.append((guess, color_codes))
 
-
-        #hay what if modelled on later for loop & do a "for g,c" but ignore the c
-
-        #Convert/add current-guess's letters to alphabetised list of all unique letters in all guesses
+        #Add current-guess's letters to alphabetised list of all unique letters in all guesses
         self.letters = ''.join(sorted(set(''.join([letter for guess, _ in self.guesses for each in guess for letter in each]))))
 
+        #todo - return value?????
 
 
-#        #TODO: only walk thru & add the latest words' guess???
-#        #increase efficiency
- 
+
         
-
-
     def print_board(self):
 
         #Show all guessed letters, then unguessed
-        print("Guessed:\t",self.letters,\
-            "\nUnguessed:\t", ''.join(sorted(set(alphabet) - set(self.letters))) \
+        print("Used:\t", self.letters,\
+            "\nUnused:\t", ''.join(sorted(set(alphabet) - set(self.letters))) \
             )
 
-        #Show all guesses & their colors
+        #Show all guesses so far & their colors
         for g, c in self.guesses:
             print(g,"\t",c)
-
-
-
-#tims was a bit different here, since not printing a whole codeblock
-#just coloring the guess itself: one column should be output:
-        # for guess, colors in self.guesses:
-        #     for guess_char, color_char in zip(guess, colors):
-        #         if color_char == 'X':
-        #             print(guess_char, end=' ')
-        #         elif color_char == 'Y':
-        #             print(yellow(guess_char), end=' ')
-        #         elif color_char == 'G':
-        #             print(green(guess_char), end=' ')
-
-
 
         #add whitespace to distinguish the new input line
         print()
 
+        #todo - return ?????
 
 
-#todo - learn why not to actually do the random within the init??
 
+#todo - learn why not to actually do this random within the declaration??
 #Choose a word from the wordlist, then start the game
 currword = random.choice(wordlist)
 game = Game(currword)
 game.word
 
-
+#todo - print rules of the game
 
 while not game.is_game_over():
     game.make_guess()
     game.print_board()
+
+    #todo
+    #call print_board after each guess re-prompt?
+    #yeah, which means pull the validation out into its own loop that make_guess calls
+        #(rename make-guess as process guess?)
+
+
     
 if game.win:
     print(f"You won! it was {game.word}!")
@@ -203,3 +213,12 @@ else:
 
 
 
+
+
+
+
+# avoid repeat guesses!
+
+
+#avoid too-long guesses
+#also avoid too short guseses
