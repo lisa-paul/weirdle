@@ -67,21 +67,25 @@ class Game:
 
             # New guess must not be empty
             if not guess:
+                game.print_board()
                 continue
 
             # New guess must not be wrong length
             elif len(guess) != 5:
-                print("Word must be 5 letters long.")
+                print(">>>>>>>Word must be 5 letters long.")
+                game.print_board()
                 continue
 
             # Check whether guess is one of the allowed words
             elif guess not in wordlist:
-                print("Word was not in the word list.")
+                print(">>>>>>>Word was not in the word list.")
+                game.print_board()      
                 continue 
 
             # Check if guess is already guessed before
             elif guess in [item[0] for item in self.guesses]:
-                print("Word was already guessed.")
+                print(">>>>>>>Word was already guessed.")
+                game.print_board()  
                 continue 
 
             #guess is valid, so proceed
