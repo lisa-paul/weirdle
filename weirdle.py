@@ -226,3 +226,15 @@ else:
 
 #avoid too-long guesses
 #also avoid too short guseses
+
+
+
+
+
+
+#TODO: add to README that I have colors now but only guaranteed for Mac playbackk in Terminal, default prog. 
+####should that be tested on: other term apps, Windows, etc?
+
+
+
+######go look at the newcolor.py & do the thing!
