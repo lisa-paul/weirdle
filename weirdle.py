@@ -6,13 +6,24 @@
 #Later, I added 
     #guessed/unguessed letter display
     #input validation checks
+    #colors
+    #Number the guesses
 
 #todo
-    #actual terminal colors?
-    #script it to run w less typing eg no  "python3"
-    #make annotated Jupyter notebook to show smarts
+    #try / error for importing colorama
+        #display different if can't import?
+        #MVP = set a flag, then if FLAG==mono print("normally")
+
+    #colorblind mode
+    #hard mode (any correct guesses must be included later)
+
+    #executable it to run w less typing eg no  "python3"
+    #make annotated Jupyter notebook for educational purposes
+
     
-    
+import colorama
+from colorama import Fore, Back, Style
+colorama.init()    
     
 import string
 import random
@@ -63,7 +74,10 @@ class Game:
         while True:
 
             print('-' * 40)
-            guess = input("Guess a 5-letter word: ").upper().strip()
+
+#            print("Guess #" + str(len(self.guesses)+1))
+#            guess = input("Guess a 5-letter word: ").upper().strip()
+            guess = input("Guess #" + str(len(self.guesses)+1) + ": ").upper().strip()
 
             # New guess must not be empty
             if not guess:
@@ -72,19 +86,19 @@ class Game:
 
             # New guess must not be wrong length
             elif len(guess) != 5:
-                print(">>>>>>>Word must be 5 letters long.")
+                print(Fore.RED + ">>>>>>>Word must be 5 letters long." + Style.RESET_ALL)
                 game.print_board()
                 continue
 
             # Check whether guess is one of the allowed words
             elif guess not in wordlist:
-                print(">>>>>>>Word was not in the word list.")
+                print(Fore.RED + ">>>>>>>Word was not in the word list." + Style.RESET_ALL)
                 game.print_board()      
                 continue 
 
             # Check if guess is already guessed before
             elif guess in [item[0] for item in self.guesses]:
-                print(">>>>>>>Word was already guessed.")
+                print(Fore.RED + ">>>>>>>Word was already guessed." + Style.RESET_ALL)
                 game.print_board()  
                 continue 
 
@@ -144,17 +158,28 @@ class Game:
 
         
     def print_board(self):
+        #Whitespace to distinguish the header from the guess guess
+        print()     
 
-        #Show all guessed letters, then unguessed
+        #Header: all guessed letters, then unguessed
         print("Used:\t", self.letters,\
             "\nUnused:\t", ''.join(sorted(set(alphabet) - set(self.letters))) \
             )
 
+        #Whitespace to distinguish the header from previous guesses
+        print()        
+
         #Show all guesses so far & their colors
+
+        #TODO - add some coloring to the 'c' portion here
+            #if c == G then print as green
+            #etc
+            #maybe there's a color-flag or color-hardtexted, I enumerate/zipped into a triple not duple here
+        #TODO - separately - number each line
         for g, c in self.guesses:
             print(g,"\t",c)
 
-        #add whitespace to distinguish the new input line
+        #Whitespace to distinguish the new input line
         print()
 
         #todo - return ?????
@@ -167,11 +192,14 @@ currword = random.choice(wordlist)
 game = Game(currword)
 game.word
 
-#todo - print rules of the game
+#todo - print rules of the game:
+    #length of word/guess
+    #num guesses allowed
+    #?
 
 while not game.is_game_over():
-    game.make_guess()
     game.print_board()
+    game.make_guess()
 
     #todo
     #call print_board after each guess re-prompt?
